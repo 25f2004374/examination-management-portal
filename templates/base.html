@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Examination Management Portal{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand bg-success navbar-dark">
+        <div class="container">
+            <span class="navbar-brand">EMP</span>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                {% if session.get('user_id') %}
+                    {% if session.get('role')=='admin'%}
+                    <a class="nav-link" href="{{url_for('admin_dashboard')}}">Dashboard</a>
+                    {% elif session.get('role')=='examiner'%}
+                    <a class="nav-link" href="{{url_for('examiner_dashboard')}}">Dashboard</a>
+                    {% elif session.get('role')=='student'%}
+                    <a class="nav-link" href="{{url_for('student_dashboard')}}">Dashboard</a>
+                    {% endif %}
+                    <form method="POST" action="{{url_for('logout')}}" class="d-flex">
+                        <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    </form>
+                {% else %}
+                <a class="nav-link" href="{{url_for('login')}}">Login</a>
+                <a class="nav-link" href="{{url_for('register')}}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'message'%}
+                      {%set category='info' %}
+                    {% endif %}
+                    <div class="alert alert-{{category}}" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+
+    </main>
+
+    <footer class="bg-white border-top py-3 mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-muted">Examination Management Portal | IITM MAD-I</p>
+        </div>
+    </footer>
+
+</body>
+</html>

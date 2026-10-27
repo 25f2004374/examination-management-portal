@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | EMP{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome to the Admin dashboard.</p>
+<hr>
+<h2>Pending Examiners</h2>
+{% if pending_examiners %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for examiner in pending_examiners %}
+            <tr>
+                <td>{{ examiner.name }}</td>
+                <td>{{ examiner.email }}</td>
+                <td> <form method="POST" action="{{url_for('approve_examiner', user_id=examiner.id)}}">
+                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" action="{{url_for('reject_examiner', user_id=examiner.id)}}">
+                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+{%else%}
+     <p>No pending examiners.</p>
+{%endif%}
+{% endblock %}

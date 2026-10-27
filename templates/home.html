@@ -1,0 +1,86 @@
+
+{% extends "base.html" %}
+{% block title %}Home | EMP{% endblock %}
+{% block content %}
+
+<div class="bg-success text-white rounded-4 p-5 mb-5">
+    <h1 class="display-5 fw-bold">Welcome to EMP</h1>
+    <p class="lead">Examination Management Portal</p>
+    <p>Manage examinations, book slots, evaluate students,and track results in one place.</p>
+
+    {% if session.get('user_id') %}
+        {% if session.get('user_role') == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-light mt-2">Go to Dashboard</a>
+        {% elif session.get('user_role') == 'examiner' %}
+            <a href="{{ url_for('examiner_dashboard') }}" class="btn btn-light mt-2">Go to Dashboard</a>
+        {% elif session.get('user_role') == 'student' %}
+            <a href="{{ url_for('student_dashboard') }}" class="btn btn-light mt-2">Go to Dashboard</a>
+        {% endif %}
+    {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-light mt-2 me-2">Login</a>
+        <a href="{{ url_for('register') }}" class="btn btn-outline-light mt-2">Register</a>
+    {% endif %}
+</div>
+
+<h2 class="text-center mb-4">Our Features</h2>
+<div class="row g-4 mb-5">
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="text-success">Exam Scheduling</h5>
+                <p class="text-secondary">Organize examinations and schedules.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="text-success">Slot Booking</h5>
+                <p class="text-secondary">Manage examination slots and bookings.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="text-success">Evaluation</h5>
+                <p class="text-secondary">Evaluate students using assessment criteria.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="text-success">Results</h5>
+                <p class="text-secondary">View examination scores and history.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white border rounded-4 p-4 mb-4">
+    <h2 class="text-center mb-4">How It Works</h2>
+
+    <div class="row g-4 text-center">
+
+        <div class="col-md-4">
+            <h5 class="text-success">1. Register or Login</h5>
+            <p class="text-secondary">Access the portal using your account.</p>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="text-success">2. Manage Examinations</h5>
+            <p class="text-secondary">Book slots or manage examinations according to your role.</p>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="text-success">3. View Results</h5>
+            <p class="text-secondary">Access evaluation results when available.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
