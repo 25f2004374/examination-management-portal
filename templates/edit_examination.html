@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Edit Examination | EMP{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Edit Examination</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Course</label>
+                <select name="course_id" class="form-control" required>
+                    {% for course in active_courses %}
+                        <option value="{{ course.id }}" {% if course.id == examination.course_id %} selected {% endif %}>{{ course.course_code }} - {{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Examination Name</label>
+                <input type="text" name="examination_name" class="form-control" value="{{ examination.examination_name }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Examination Type</label>
+                <input type="text" name="examination_type" class="form-control" value="{{ examination.examination_type }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Duration (minutes)</label>
+                <input type="number" name="duration_minutes" class="form-control" value="{{ examination.duration_minutes }}" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Maximum Marks</label>
+                <input type="number" name="maximum_marks" class="form-control" value="{{ examination.maximum_marks }}" min="1" step="any" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Slot Creation Start</label>
+                <input type="datetime-local" name="slot_creation_start" class="form-control" value="{{ examination.slot_creation_start }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Slot Creation End</label>
+                <input type="datetime-local" name="slot_creation_end" class="form-control" value="{{ examination.slot_creation_end }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Booking Start</label>
+                <input type="datetime-local" name="booking_start" class="form-control" value="{{ examination.booking_start }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Booking End</label>
+                <input type="datetime-local" name="booking_end" class="form-control" value="{{ examination.booking_end }}" required>
+            </div>
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="{{ url_for('manage_examinations') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

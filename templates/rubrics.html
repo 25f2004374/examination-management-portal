@@ -1,0 +1,68 @@
+{% extends "base.html"%}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Manage Examination Rubrics</h2>
+    <h5 class="text-muted">Examination: {{ examination.examination_name }}</h5>
+
+    <hr>
+
+    <h4>Add New Rubric</h4>
+    <form method="POST" action="{{url_for('add_rubric', examination_id=examination.id)}}">
+        <div class="mb-3">
+            <label class="form-label">Criterion name</label>
+            <input type="text" name="criterion_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Maximum marks</label>
+            <input type="number" name="maximum_marks" class="form-control" min="1" step="any" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Weightage</label>
+            <input type="number" name="weightage" class="form-control" min="0" max="100" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Add Rubric</button>
+        
+        <a href="{{ url_for('manage_examinations') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    <hr>
+    {% if rubrics %}
+    <h4>Existing Rubrics</h4>
+    <table class="table table-bordered table-stripd">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Criteria Name</th>
+                <th>Maximum Marks</th>
+                <th>Weightage (%)</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rubric in rubrics %}
+            <tr>
+                <td>{{ rubric.id}}</td>
+                <td>{{ rubric.criterion_name}}</td>
+                <td>{{ rubric.maximum_marks}}</td>
+                <td>{{ rubric.weightage}}</td>
+                <td>{{ rubric.description}}</td>
+                <td><a href="{{ url_for('edit_rubric', rubric_id=rubric.id) }}" class="btn btn-sm btn-primary">Edit</a></td>
+                <td><form method="POST" action="{{ url_for('delete_rubric', rubric_id=rubric.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-muted">No rubrics have been added for this examination yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Booking Management | EMP{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Booking Management</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <h4 class="mb-3">All Bookings</h4>
+
+        {% if bookings %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Student</th>
+                        <th>Examination</th>
+                        <th>Examiner</th>
+                        <th>Slot Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.student_name }}</td>
+                        <td>{{ booking.examination_name }}</td>
+                        <td>{{ booking.examiner_name }}</td>
+                        <td>{{ booking.slot_date }}</td>
+                        <td>{{ booking.start_time }}</td>
+                        <td>{{ booking.end_time }}</td>
+                        <td>{{ booking.status }}</td>
+                        <td><form method="POST" action="{{url_for('reschedule_booking', booking_id=booking.id)}}">
+                            <select name="slot_id" class="form-select form-select-sm mb-2" required>
+                                <option value="" disabled selected>Select Slot</option>
+                                {% for slot in slots %}
+                                    <option value="{{ slot.id }}">{{ slot.slot_date }} {{ slot.start_time }} - {{ slot.end_time }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Reschedule</button>
+                        </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>No bookings found.</p>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

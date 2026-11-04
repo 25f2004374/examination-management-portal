@@ -1,0 +1,29 @@
+{%extends "base.html"%}
+{%block title%}Edit course | EMP{%endblock%}
+
+{%block content%}
+<h1>Edit Course</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Course Code</label>
+                <input type="text" name="course_code" class="form-control" value="{{course.course_code}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Course name</label>
+                <input type="text" name="course_name" class="form-control" value="{{course.course_name}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-select">
+                    <option value="active" {% if course.status=='active'%} selected {%endif%}> Active </option>
+                    <option value="inactive" {% if course.status=='inactive'%} selected {%endif%}>Inactive</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Update Course</button>
+            <a href="{{url_for('manage_courses')}}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{%endblock%}

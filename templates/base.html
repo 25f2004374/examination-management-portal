@@ -18,6 +18,8 @@
                 {% if session.get('user_id') %}
                     {% if session.get('role')=='admin'%}
                     <a class="nav-link" href="{{url_for('admin_dashboard')}}">Dashboard</a>
+                    <a class="nav-link" href="{{url_for('manage_courses')}}">Courses</a>
+                    <a class="nav-link" href="{{url_for('manage_examinations')}}">Examinations</a>
                     {% elif session.get('role')=='examiner'%}
                     <a class="nav-link" href="{{url_for('examiner_dashboard')}}">Dashboard</a>
                     {% elif session.get('role')=='student'%}

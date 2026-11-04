@@ -9,11 +9,11 @@
     <p>Manage examinations, book slots, evaluate students,and track results in one place.</p>
 
     {% if session.get('user_id') %}
-        {% if session.get('user_role') == 'admin' %}
+        {% if session.get('role') == 'admin' %}
             <a href="{{ url_for('admin_dashboard') }}" class="btn btn-light mt-2">Go to Dashboard</a>
-        {% elif session.get('user_role') == 'examiner' %}
+        {% elif session.get('role') == 'examiner' %}
             <a href="{{ url_for('examiner_dashboard') }}" class="btn btn-light mt-2">Go to Dashboard</a>
-        {% elif session.get('user_role') == 'student' %}
+        {% elif session.get('role') == 'student' %}
             <a href="{{ url_for('student_dashboard') }}" class="btn btn-light mt-2">Go to Dashboard</a>
         {% endif %}
     {% else %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Manage Examiners | EMP{% endblock %}
+
+{% block content %}
+<h1>Manage Examiners</h1>
+<p>View and manage registered examiners.</p>
+
+<hr>
+
+<form method="GET" action="{{url_for('manage_examiners')}}" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by name or id" value="{{ search}}">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+{% if examiners %}
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for examiner in examiners %}
+        <tr>
+            <td>{{ examiner.id }}</td>
+            <td>{{ examiner.name }}</td>
+            <td>{{ examiner.email }}</td>
+            <td>{{ examiner.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No examiners found.</p>
+{% endif %}
+
+{% endblock %}

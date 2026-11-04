@@ -6,6 +6,107 @@
 <h1>Admin Dashboard</h1>
 <p>Welcome to the Admin dashboard.</p>
 <hr>
+<h2>Dashboard Overview</h2>
+<div class="row g-3 mb-4">
+    <div class="col-md-4 col-lg-4">
+        <div class="card bg-white border shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Total Courses</h5>
+                <h2 class="text-success">{{ total_courses }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+        <div class="card bg-white border shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Total Examinations</h5>
+                <h2 class="text-success">{{ total_examinations }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+        <div class="card bg-white border shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Total Examiners</h5>
+                <h2 class="text-success">{{ total_examiners }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+        <div class="card bg-white border shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Total Students</h5>
+                <h2 class="text-success">{{ total_students }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+        <div class="card bg-white border shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Examination Slots</h5>
+                <h2 class="text-success">{{ total_slots }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+        <div class="card bg-white border shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Total Bookings</h5>
+                <h2 class="text-success">{{ total_bookings }}</h2>
+            </div>
+        </div>
+</div>
+
+<hr>
+
+<h2>User Management</h2>
+<div class="row g-3 mb-4">
+    <div class="col-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Manage examiners</h5>
+                <p class="card-text">View and manage registered examiners.</p>
+                <a href="{{ url_for('manage_examiners') }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Manage students</h5>
+                <p class="card-text">View and manage registered students.</p>
+                <a href="{{ url_for('manage_students') }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Examination Slots</h5>
+                <p class="card-text">View and manage examination slots.</p>
+                <a href="{{ url_for('manage_examination_slots') }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Manage Bookings</h5>
+                <p class="card-text">View and manage examination bookings.</p>
+                <a href="{{ url_for('manage_bookings') }}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+</div>
+
+
 <h2>Pending Examiners</h2>
 {% if pending_examiners %}
     <table class="table table-bordered table-striped">
@@ -13,7 +114,7 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Action</th>
+                <th colspan="2">Action</th>
             </tr>
         </thead>
         <tbody>

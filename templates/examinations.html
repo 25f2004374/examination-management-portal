@@ -1,0 +1,119 @@
+{%extends "base.html" %}
+{%block title%} Examination Management | EMP{%endblock%}
+
+{%block content%}
+<h1 class="mb-4">Examination Management</h1>
+
+<!--for adding exams-->
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="card-title mb-3">Add New Examination</h4>
+        <form method="POST" action="{{url_for('add_examination')}}">
+           <div class="mb-3">
+                <label class="form-label">Course</label>
+                <select name="course_id" class="form-select" required>
+                    <option value="" selected disabled>Select Course</option>
+                    {%for course in active_courses %}
+                    <option value="{{course.id}}">{{course.course_code}} - {{course.course_name}}</option>
+                    {%endfor%}
+                </select>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Examination Name</label>
+            <input type="text" name="examination_name" class="form-control" required>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Examination Type</label>
+            <input type="text" name="examination_type" class="form-control" required>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Duration(Minutes)</label>
+            <input type="text" name="duration_minutes" class="form-control" required>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Maximum Marks</label>
+            <input type="text" name="maximum_marks" class="form-control" min="1" step="any"  required>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Slot Creation Start</label>
+            <input type="datetime-local" name="slot_creation_start" class="form-control" required>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Slot Creation End</label>
+            <input type="datetime-local" name="slot_creation_end" class="form-control" required>
+           </div>
+           <div class="mb-3">
+            <label class="form-label">Booking Start</label>
+            <input type="datetime-local" name="booking_start" class="form-control" required>
+           </div>
+            <div class="mb-3">
+            <label class="form-label">Booking End</label>
+            <input type="datetime-local" name="booking_end" class="form-control" required>
+           </div>
+           <button type="submit" class="btn btn-success">Add Exam</button>
+        </form>
+    </div>
+</div>
+
+<!--for showing all exams-->
+
+<form method="GET" action="{{url_for('manage_examinations')}}" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by examination name or id" value="{{ search}}">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="card-title mb-3">All Examinations</h4>
+        {%if examinations%}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Course</th>
+                        <th>Examination Name</th>
+                        <th>Type</th>
+                        <th>Duration(Min)</th>
+                        <th>Maximum Marks</th>
+                        <th>Status</th>
+                        <th>Timeline</th>
+                        <th colspan="3">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam in examinations %}
+                    <tr>
+                        <td>{{exam.id}}</td>
+                        <td>{{exam.course_code}}</td>
+                        <td>{{exam.examination_name}}</td>
+                        <td>{{exam.examination_type}}</td>
+                        <td>{{exam.duration_minutes}}</td>
+                        <td>{{exam.maximum_marks}}</td>
+                        <td>{{exam.status}}</td>
+                        <td> <bold>Slot creation:</bold><br>
+                            {{exam.slot_creation_start}} -> {{exam.slot_creation_end}}
+                            <hr class="my-1">
+                            <bold> Student Booking:</bold><br>
+                            {{exam.booking_start}} -> {{exam.booking_end}}
+                        </td>
+                        <td><a href="{{url_for('edit_examination', examination_id=exam.id)}}" class="btn btn-sm btn-primary">Edit</a></td>
+                        <td><form method="POST" action="{{url_for('delete_examination', examination_id=exam.id)}}" style="display:inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        </td>
+                        <td><a href="{{url_for('manage_rubrics', examination_id=exam.id)}}" class="btn btn-sm btn-success">Rubrics</a></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        {%else%}
+        <p class="text-muted">No examinations have been created yet.</p>
+        {%endif%}
+    </div>
+</div>
+{%endblock%}

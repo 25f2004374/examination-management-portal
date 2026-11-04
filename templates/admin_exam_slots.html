@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} Examination Slots | EMP {% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Examination Slots Management</h1>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="card-title mb-3">All Examination Slots</h4>
+        {% if exams %}
+        <dic class="table-responsive">
+           <table class="table table-bordered table-striped align-middle">
+                <thead>
+                   <tr>
+                    <th>Slot Id</th>
+                    <th>Examination</th>
+                    <th>Examiner</th>
+                    <th>Examiner Email</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Maximum Capacity</th>
+                   </tr>
+                </thead>
+
+                <tbody>
+                    {% for exam in exams %}
+                    <tr>
+                        <td>{{ exam.slot_id }}</td>
+                        <td>{{ exam.examination }}</td>
+                        <td>{{ exam.examiner }}</td>
+                        <td>{{ exam.examiner_email }}</td>
+                        <td>{{ exam.date }}</td>
+                        <td>{{ exam.start_time }}</td>
+                        <td>{{ exam.end_time }}</td>
+                        <td>{{ exam.maximum_capacity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+          <p class="text-muted">No examination slots found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
